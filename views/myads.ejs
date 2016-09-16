@@ -1,0 +1,22 @@
+<% include ./partials/header %>
+ <div class="ui card centered">
+  <div class="image">
+    <img src="https://static.ts.360.com/home/images/home/avatar3-0836fbe0.jpg">
+  </div>
+  <div class="content">
+    <a class="header"><%=currentUser.username%></a>
+    <div class="meta">
+      <span class="date">Joined on <%=formattedTime%></span>
+    </div>
+    <div class="description">
+      <%=currentUser.about%>
+    </div>
+  </div>
+  <div class="extra content">
+    <a>
+      <i class="browser icon"></i>
+      <%=no%>
+    </a>
+  </div>
+</div>
+<% include ./partials/footer %>

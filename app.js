@@ -24,12 +24,28 @@ app.use(bodyParser.urlencoded({extended:true}));
 var UserSchema = new Schema({
     username: String,
     email:String,
+    date:{type:Date , default:Date.now},
     password: String
 });
+
+//ad schema
+var adSchema = new Schema({
+    name: String,
+    perks:String,
+    description: String,
+    author:{
+   		id: {
+   			type:mongoose.Schema.Types.ObjectId,
+   			ref: "User"
+   		},
+   		username: String
+   }
+}); 
 
 UserSchema.plugin(passportLocalMongoose);
 
 const User = mongoose.model('User', UserSchema);
+const Ad = mongoose.model('Ad', adSchema);
 
 app.use(require("express-session")({
     secret: "Hello There",
@@ -84,14 +100,52 @@ app.post('/register',function(req,res){
 });
 
 //add ad
-app.get('/:username/add',function(req,res){
+app.get('/:username/add',isLoggedIn,function(req,res){
 	res.render('add');
+});
+
+//post ad
+app.post('/:username/add',isLoggedIn,function(req,res){
+	var newAd = {name:req.body.name,perks:req.body.perks,description:req.body.description,author:{id:req.user.id,username:req.user.username}};
+	Ad.create(newAd,function(err,created){
+		if(err){
+			res.redirect('/'+req.user.username+'/myads');
+		}else{
+			console.log('created');
+			res.redirect('/'+req.user.username+'/myads');
+		}
+	});
+});
+
+//show my ads
+app.get('/:username/myads',isLoggedIn,function(req,res){
+	Ad.find({'author.username':req.user.username},function(err,foundAuthorAll){
+		if(err){
+			res.redirect('/');
+		}else{
+			var millistamp = req.user.date;
+			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		    var year = millistamp.getFullYear();
+		    var month = months[millistamp.getMonth()];
+		    var date = millistamp.getDate();
+		    var formattedTime = month + ' ' + date + ', ' + year;
+			res.render('myads',{foundAuthorAll:foundAuthorAll,no:foundAuthorAll.length,formattedTime:formattedTime});
+			console.log(foundAuthorAll);
+		}
+	});
 });
 
 app.get("/logout", function(req, res){
    req.logout();
    res.redirect("/");
 });
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
 
 app.listen(port);
 console.log('The magic happens on port ' + port);

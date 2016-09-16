@@ -140,12 +140,12 @@
     <div class="right menu">
      <% if(!currentUser){ %> 
       <div class="item">
-        <a class="ui button" href='/login'>Log in</a>
+        <a class="ui button" href='/login'>Log in</a>&nbsp;&nbsp;
         <a class="ui button" href="/register">Register</a>
       </div>
      <% } else { %>
       <div class="item">
-        <a class="ui button" href='/myads'><%= currentUser.username %></a>&nbsp;&nbsp;
+        <a class="ui button" href='<%=currentUser.username%>/myads'><%= currentUser.username %></a>&nbsp;&nbsp;
         <a class="ui button" href='/<%= currentUser.username %>/add'>Post New Ad</a>&nbsp;&nbsp;
         <a class="ui button" href="/logout">Logout</a>&nbsp;&nbsp;
       </div>
@@ -164,7 +164,7 @@
   <a class="item" href='/login'>Login</a>
   <a class="item" href="/register">Register</a>
  <% } else { %>
-  <a class="item" href='/myads'><%= currentUser.username %></a>
+  <a class="item" href='<%=currentUser.username%>/myads'><%= currentUser.username %></a>
   <a class="item" href="/<%= currentUser.username %>/add">Post New Ad</a>
   <a class="item" href="/logout">Logout</a>
  <% } %>
@@ -190,7 +190,7 @@
           <a class="ui inverted button" href="/login">Log in</a>
           <a class="ui inverted button" href="/register">Register</a>
          <% } else { %>
-          <a class="ui inverted button" href='/myads'><%= currentUser.username %></a>
+          <a class="ui inverted button" href='<%=currentUser.username%>/myads'><%= currentUser.username %></a>
           <a class="ui inverted button" href="/<%= currentUser.username %>/add">Post New Ad</a>
           <a class="ui inverted button" href="/logout">Logout</a>
          <% } %>          
