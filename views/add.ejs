@@ -1,0 +1,21 @@
+<% include ./partials/header %>
+<br><br><br>
+    <div class='ui main text container inverted segment'>
+        <div class='ui huge header'>Post a new Ad</div>
+        <form class='ui form' action='/add' method='POST'>
+            <div class='field'>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" placeholder="Name">
+                </div><br>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="phone" placeholder="Phone number(optional)">
+                </div><br>
+                <div class="form-group">
+                  <textarea class="form-control" placeholder="Description" name="description"></textarea>
+                </div>
+            <a href="/">Go Back</a>
+            </div>
+          <input class='ui green basic button' type="submit"></input>
+        </form>
+    </div>
+<% include ./partials/footer %>

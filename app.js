@@ -51,6 +51,47 @@ app.use(function(req, res, next){
 app.get('/',function(req,res){
    res.render('landing');
 });
+//register route
+app.get('/register',function(req,res){
+   res.render('register');
+});
+
+//get login page
+app.get('/login',function(req,res){
+	res.render('login');
+});
+
+//post login page
+app.post("/login", passport.authenticate("local", 
+    {
+        successRedirect: "/",
+        failureRedirect: "/login"
+    }), function(req, res){
+});
+
+//Into the database
+app.post('/register',function(req,res){
+   var newUser = new User({username: req.body.username,email:req.body.email});
+   User.register(newUser, req.body.password, function(err, user){
+        if(err){
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, function(){
+           res.redirect("/"); 
+        });
+    });
+});
+
+//add ad
+app.get('/:username/add',function(req,res){
+	res.render('add');
+});
+
+app.get("/logout", function(req, res){
+   req.logout();
+   res.redirect("/");
+});
 
 app.listen(port);
 console.log('The magic happens on port ' + port);
