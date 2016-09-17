@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var port    = process.env.PORT || 8080;
+var port    = process.env.PORT || 3000;
 var passport    = require('passport');
 var methodOverride = require('method-override');
 var LocalStrategy = require('passport-local');
@@ -131,6 +131,18 @@ app.get('/:username/myads',isLoggedIn,function(req,res){
 		    var formattedTime = month + ' ' + date + ', ' + year;
 			res.render('myads',{foundAuthorAll:foundAuthorAll,no:foundAuthorAll.length,formattedTime:formattedTime});
 			console.log(foundAuthorAll);
+		}
+	});
+});
+
+//show all ads
+app.get('/allAds',function(req,res){
+	Ad.find({},function(err,foundAll){
+		if(err){
+			res.redirect('/');
+		}else{
+			res.render('allads',{foundAll:foundAll,no:foundAll.length});
+			console.log(foundAll);
 		}
 	});
 });
