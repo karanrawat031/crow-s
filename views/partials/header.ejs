@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Crow's</title>
   <!-- Site Properties -->
-
+  <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css">
-
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.js"></script>
   <style type="text/css">
 
     .hidden.menu {
@@ -135,7 +135,7 @@
   <div class="ui container">
     <a class="active item" href="/">Home</a>
     <a class="item" href="/allAds">All Ads</a>
-    <a class="item" href="/cat">Categories</a>
+    <a class="item" href="/categories">Categories</a>
     <a class="item" href="/about">About</a>
     <div class="right menu">
      <% if(!currentUser){ %> 
@@ -158,13 +158,13 @@
 <div class="ui vertical inverted sidebar menu">
   <a class="active item" href='/'>Home</a>
   <a class="item" href="/allAds">All Ads</a>
-  <a class="item" href="/cat">Categories</a>
+  <a class="item" href="/categories">Categories</a>
   <a class="item" href="/about">About</a>
  <% if(!currentUser){ %> 
   <a class="item" href='/login'>Login</a>
   <a class="item" href="/register">Register</a>
  <% } else { %>
-  <a class="item" href='<%=currentUser.username%>/myads'><%= currentUser.username %></a>
+  <a class="item" href="/<%=currentUser.username%>/myads"><%= currentUser.username %></a>
   <a class="item" href="/<%= currentUser.username %>/add">Post New Ad</a>
   <a class="item" href="/logout">Logout</a>
  <% } %>
@@ -183,7 +183,7 @@
         </a>
         <a class="active item" href="/">Home</a>
         <a class="item" href="/allAds">All Ads</a>
-        <a class="item" href="/cat">Categories</a>
+        <a class="item" href="/categories">Categories</a>
         <a class="item" href='/about'>About</a>
         <div class="right item">
          <% if(!currentUser){ %> 

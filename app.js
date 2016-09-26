@@ -33,6 +33,9 @@ var adSchema = new Schema({
     name: String,
     perks:String,
     description: String,
+    cat:String,
+    location:String,
+    time:String,
     author:{
    		id: {
    			type:mongoose.Schema.Types.ObjectId,
@@ -106,7 +109,7 @@ app.get('/:username/add',isLoggedIn,function(req,res){
 
 //post ad
 app.post('/:username/add',isLoggedIn,function(req,res){
-	var newAd = {name:req.body.name,perks:req.body.perks,description:req.body.description,author:{id:req.user.id,username:req.user.username}};
+	var newAd = {name:req.body.name,perks:req.body.perks,description:req.body.description,cat:req.body.cat,location:req.body.states,time:req.body.time,author:{id:req.user.id,username:req.user.username}};
 	Ad.create(newAd,function(err,created){
 		if(err){
 			res.redirect('/'+req.user.username+'/myads');
@@ -150,6 +153,32 @@ app.get('/allAds',function(req,res){
 app.get("/logout", function(req, res){
    req.logout();
    res.redirect("/");
+});
+
+app.get('/categories',function(req,res){
+	res.render('cat.ejs');
+});
+
+app.get('/cat/:cat',function(req,res){
+	Ad.find({'cat':req.params.cat},function(err,foundCatAll){
+		if(err){
+			res.redirect('/');
+		}else{
+			res.render('catads',{foundCatAll:foundCatAll,cat:req.params.cat});
+			console.log(foundCatAll)
+		}
+	});
+});
+
+app.get('/user/:username',function(req,res){
+	Ad.find({'author.username':req.params.username},function(err,foundAuthorAll){
+		if(err){
+			res.redirect('/');
+		}else{
+			res.render('author',{foundAuthorAll:foundAuthorAll,username:req.params.username});
+			console.log(foundAuthorAll);
+		}
+	});
 });
 
 function isLoggedIn(req, res, next){

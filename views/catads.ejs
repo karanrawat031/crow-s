@@ -1,0 +1,23 @@
+<% include ./partials/header %>
+<div> 
+<div class='ui huge header inverted'>Ads for <%=cat%></div> 
+<% foundCatAll.forEach(function(foundCatOne){ %> 
+ <div class='ui main text container segment'>
+    <div class="ui items">
+      <div class="item">
+        <div class="content">
+          <a class="header">Name:<%=foundCatOne.name%></a>
+          <div class="description">
+            <p><span style="font-size:19px;">Perks:</span><%=foundCatOne.perks%></p>
+            <p><span style="font-size:19px;">Category:</span><%=foundCatOne.cat%></p>
+            <p><span style="font-size:19px;">Location:</span><%=foundCatOne.location%></p>
+            <p><span style="font-size:19px;">Duration:</span><%=foundCatOne.time%></p>
+            <p><span style="font-size:19px;">Description:</span><%=foundCatOne.description%></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% }); %><br><hr>   
+</div>
+<% include ./partials/footer %>

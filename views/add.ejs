@@ -10,6 +10,63 @@
                 <div class="form-group">
                     <input class="form-control" type="text" name="perks" placeholder="What would be the perks for doing the job">
                 </div><br>
+                    <select class="ui fluid search dropdown" name='cat' id='cat'>
+                      <div class="menu">
+                      <option value="">Type</option>
+                      <option value="Academics" name='1'>Academics</option>
+                      <option value="Internship" name='2'>Internship</option>
+                      <option value="Part-Time" name='3'>Part-Time</option>
+                      <option value="Full-Time" name='4'>Full-Time</option>
+                      <option value="Skilled Work" name='5'>Skilled Work</option>
+                      <option value="Misc" name='6'>Misc</option>
+                      </div>
+                    </select><br> 
+                    <select multiple="" name="states" class="ui fluid normal dropdown" id='state'>
+                      <option value="">Job States</option>
+                      <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                      <option value="Andhra Pradesh">Andhra Pradesh</option>
+                      <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                      <option value="Assam">Assam</option>
+                      <option value="Bihar">Bihar</option>
+                      <option value="Chandigarh">Chandigarh</option>
+                      <option value="Chhattisgarh">Chhattisgarh</option>
+                      <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                      <option value="Daman and Diu">Daman and Diu</option>
+                      <option value="Delhi">Delhi</option>
+                      <option value="Goa">Goa</option>
+                      <option value="Gujarat">Gujarat</option>
+                      <option value="Haryana">Haryana</option>
+                      <option value="Himachal Pradesh">Himachal Pradesh</option>
+                      <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                      <option value="Jharkhand">Jharkhand</option>
+                      <option value="Karnataka">Karnataka</option>
+                      <option value="Kerala">Kerala</option>
+                      <option value="Lakshadweep">Lakshadweep</option>
+                      <option value="Madhya Pradesh">Madhya Pradesh</option>
+                      <option value="Maharashtra">Maharashtra</option>
+                      <option value="Manipur">Manipur</option>
+                      <option value="Meghalaya">Meghalaya</option>
+                      <option value="Mizoram">Mizoram</option>
+                      <option value="Nagaland">Nagaland</option>
+                      <option value="Orissa">Orissa</option>
+                      <option value="Pondicherry">Pondicherry</option>
+                      <option value="Punjab">Punjab</option>
+                      <option value="Rajasthan">Rajasthan</option>
+                      <option value="Sikkim">Sikkim</option>
+                      <option value="Tamil Nadu">Tamil Nadu</option>
+                      <option value="Tripura">Tripura</option>
+                      <option value="Uttaranchal">Uttaranchal</option>
+                      <option value="Uttar Pradesh">Uttar Pradesh</option>
+                      <option value="West Bengal">West Bengal</option>
+                    </select><br>
+                    <select class="ui fluid search dropdown" name='time' id='time'>
+                      <option value="">Time Duration</option>
+                      <option value="1-4 months">1-4 months</option>
+                      <option value="5-8 months">5-8 months</option>
+                      <option value="9-12 months">9-12 months</option>
+                      <option value=">12 months">>12 months</option>
+                    </select>
+                    <br>
                 <div class="form-group">
                   <textarea class="form-control" placeholder="Description" name="description"></textarea>
                 </div>
@@ -18,4 +75,9 @@
           <input class='ui green basic button' type="submit"></input>
         </form>
     </div>
+    <script type="text/javascript">
+      $('#cat').dropdown();
+      $('#state').dropdown();
+      $('#time').dropdown();
+    </script>
 <% include ./partials/footer %>

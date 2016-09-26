@@ -8,15 +8,18 @@
         <div class="content">
           <a class="header">Name:<%=foundOne.name%></a>
           <div class="description">
-            <h3>Perks:<%=foundOne.perks%></h3>
-            <h3>Description:<%=foundOne.description%></h3>
+            <p><span style="font-size:19px;">Perks:</span><%=foundOne.perks%></p>
+            <p><span style="font-size:19px;">Category:</span><%=foundOne.cat%></p>
+            <p><span style="font-size:19px;">Location:</span><%=foundOne.location%></p>
+            <p><span style="font-size:19px;">Duration:</span><%=foundOne.time%></p>
+            <p><span style="font-size:19px;">Description:</span><%=foundOne.description%></p>
           </div>
         </div>
       </div>
     </div>
     <h4 class="ui horizontal header divider">
-        <a href="/<%=foundOne.author.username%>"><%=foundOne.author.username%></a>
+        <a href="/user/<%=foundOne.author.username%>"><%=foundOne.author.username%></a>
       </h4>
-  </div>    
+  </div>  
 <% }); %><br><hr>   
 <% include ./partials/footer %>
