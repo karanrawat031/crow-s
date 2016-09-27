@@ -1,0 +1,21 @@
+<% include ./partials/header %>
+<div class='ui huge header inverted'>ADS applied by <%=currentUser.username%></div> 
+<% foundApp.forEach(function(foundAppOne){ %> 
+ <div class='ui main text container segment'>
+    <div class="ui items">
+      <div class="item">
+        <div class="content">
+          <a class="header">Name:<%=foundAppOne.name%></a>
+          <div class="description">
+            <p><span style="font-size:19px;">Applied For:</span><a href='/<%=foundAppOne.author.username%>/applied/<%=foundAppOne.appli.id%>'>https://crows.com/<%=foundAppOne.author.username%>/applied/<%=foundAppOne.appli.id%></a></p>
+            <p><span style="font-size:19px;">Ad By:</span><%=foundAppOne.author.username%></p>
+            <p><span style="font-size:19px;">Email:</span><%=foundAppOne.email%></p>
+            <p><span style="font-size:19px;">Phone:</span><%=foundAppOne.phone%></p>
+            <p><span style="font-size:19px;">Description:</span><%=foundAppOne.desc%></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% }); %><br><hr>   
+<% include ./partials/footer %>

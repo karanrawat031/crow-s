@@ -1,0 +1,24 @@
+<% include ./partials/header %>
+  <br><br><br>
+    <div class='ui main text container inverted segment'>
+        <div class='ui huge header'>Submit your Application</div>
+        <form class='ui form' action="/<%=username%>/<%=userid%>/apply/<%=adid%>" method="POST">
+            <div class='field'>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" placeholder="Name" value="<%=currentUser.username%>">
+                </div><br>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="email" placeholder="Email" value="<%=currentUser.email%>">
+                </div><br>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="phone" placeholder="Contact Number">
+                </div><br>
+                <div class="form-group">
+                  <textarea class="form-control" placeholder="Why should we choose you" name="description"></textarea>
+                </div>
+            <a href="/<%=currentUser.username%>/myads">Go Back</a>
+            </div>
+          <input class='ui green basic button' type="submit"></input>
+        </form>
+    </div>
+<% include ./partials/footer %>  

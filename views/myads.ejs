@@ -17,10 +17,10 @@
     <a>
       <i class="browser icon"></i>
       <%=no%>
-    </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class='ui orange basic mini button' type="submit" href='/<%=currentUser.username%>/edit/<%=currentUser._id%>'>Edit</a>
+    </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class='ui orange basic mini button' href='/<%=currentUser.username%>/myads/applied'>Applied</a><a class='ui orange basic mini button' type="submit" href='/<%=currentUser.username%>/edit/<%=currentUser._id%>'>Edit</a>
   </div>
  </div>
-<div class='ui huge header inverted'>Your ADS</div> 
+<div class='ui huge header inverted'>ADS placed by <%=currentUser.username%></div> 
 <% foundAuthorAll.forEach(function(foundAuthorOne){ %> 
  <div class='ui main text container segment'>
     <div class="ui items">

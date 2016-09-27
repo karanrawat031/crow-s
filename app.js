@@ -46,10 +46,33 @@ var adSchema = new Schema({
    }
 }); 
 
+//apply schema
+var appSchema = new Schema({
+	name:String,
+	email:String,
+	phone:String,
+	desc:String,
+	by:String,
+	author:{
+		id:{
+			type:mongoose.Schema.Types.ObjectId,
+			ref:"User"
+		},
+		username:String
+	},
+	appli:{
+		id:{
+			type:mongoose.Schema.Types.ObjectId,
+   			ref: "Ad"
+		}
+	}
+});
+
 UserSchema.plugin(passportLocalMongoose);
 
 const User = mongoose.model('User', UserSchema);
 const Ad = mongoose.model('Ad', adSchema);
+const App = mongoose.model('App', appSchema);
 
 app.use(require("express-session")({
     secret: "Hello There",
@@ -251,6 +274,31 @@ app.put('/:username/edit/:id',isLoggedIn,function(req,res){
 			res.redirect('/');    
         }
     });
+});
+
+app.get('/:username/:userid/:adid/apply',isLoggedIn,function(req,res){
+	res.render('apply',{adid:req.params.adid,username:req.params.username,userid:req.params.userid});
+});
+
+app.get('/:username/myads/applied',isLoggedIn,function(req,res){
+	App.find({'by':req.params.username},function(err,foundApp){
+		if(err){
+			res.redirect('back');
+		}else{
+			res.render('applied',{foundApp:foundApp});
+		}
+	});
+});
+
+app.post('/:username/:userid/apply/:adid',isLoggedIn,function(req,res){
+			var newAppl = {name:req.body.name,email:req.body.email,phone:req.body.phone,desc:req.body.description,by:req.user.username,author:{id:req.params.userid,username:req.params.username},appli:{id:req.params.adid}};
+			App.create(newAppl,function(err,created){
+				if(err){
+					res.redirect('/'+req.user.username+'/myads');
+				}else{
+					res.redirect('/'+req.user.username+'/myads/applied');
+				}
+			});
 });
 
 function isLoggedIn(req, res, next){
