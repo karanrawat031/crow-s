@@ -19,6 +19,7 @@ const Schema = mongoose.Schema;
 app.set('view engine','ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(methodOverride('_method'));
 
 //user schema
 var UserSchema = new Schema({
@@ -133,7 +134,6 @@ app.get('/:username/myads',isLoggedIn,function(req,res){
 		    var date = millistamp.getDate();
 		    var formattedTime = month + ' ' + date + ', ' + year;
 			res.render('myads',{foundAuthorAll:foundAuthorAll,no:foundAuthorAll.length,formattedTime:formattedTime});
-			console.log(foundAuthorAll);
 		}
 	});
 });
@@ -145,7 +145,6 @@ app.get('/allAds',function(req,res){
 			res.redirect('/');
 		}else{
 			res.render('allads',{foundAll:foundAll,no:foundAll.length});
-			console.log(foundAll);
 		}
 	});
 });
@@ -165,7 +164,6 @@ app.get('/cat/:cat',function(req,res){
 			res.redirect('/');
 		}else{
 			res.render('catads',{foundCatAll:foundCatAll,cat:req.params.cat});
-			console.log(foundCatAll)
 		}
 	});
 });
@@ -176,9 +174,83 @@ app.get('/user/:username',function(req,res){
 			res.redirect('/');
 		}else{
 			res.render('author',{foundAuthorAll:foundAuthorAll,username:req.params.username});
-			console.log(foundAuthorAll);
 		}
 	});
+});
+
+app.get('/:username/myads/:id/edit',isLoggedIn,function(req,res){
+	Ad.findById(req.params.id,function(err,foundAd){
+		if(err){
+			console.log(err);
+			res.redirect('back');
+		}else{
+			res.render('edit',{foundAd:foundAd});
+		}
+	});
+});
+
+app.put('/:username/myads/:id',isLoggedIn,function(req,res){
+    var updatedAd = {name:req.body.name,perks:req.body.perks,description:req.body.description,cat:req.body.cat,location:req.body.states,time:req.body.time,author:{id:req.user.id,username:req.user.username}};
+    Ad.findByIdAndUpdate(req.params.id,updatedAd,function(err,updatedAd){
+        if(err){
+            console.log('Error found');
+            console.log(err);
+            res.redirect('back');
+        }else{
+            res.redirect('/'+req.user.username+'/myads');    
+        }
+    });
+});
+
+app.delete('/:username/myads/:id',isLoggedIn,function(req,res){
+    Ad.findByIdAndRemove(req.params.id,function(err,removed){
+        if(err){
+            console.log('Error was there');
+            console.log(err);
+            res.redirect('/');
+        }else{
+        res.redirect('/'+req.user.username+'/myads');
+        }
+    });
+});
+
+app.get('/:username/edit/:id',isLoggedIn,function(req,res){
+	User.findById(req.params.id,function(err,foundUser){
+		if(err){
+			res.redirect('back');
+		}else{
+			res.render('editprofile',{foundUser:foundUser});
+		}
+	});
+});
+
+app.put('/:username/edit/:id',isLoggedIn,function(req,res){
+    var updatedUser = {username:req.body.name,email:req.body.email};
+    User.findByIdAndUpdate(req.params.id,updatedUser,function(err,updatedUser){
+        if(err){
+            console.log('Error found');
+            res.redirect('back');
+        }else{
+        	Ad.find({'author.username':req.params.username},function(err,foundAuthorAll){
+				if(err){
+					res.redirect('/'+req.user.username+'/myads');
+				}else{
+					// console.log(foundAuthorAll);
+				   foundAuthorAll.forEach(function(foundAuthorOne){
+				   	  foundAuthorOne.author.username=req.body.name;
+				   	  foundAuthorOne.save(function(err,updatedOne){
+				   	  	if(err){
+				   	  		console.log(err);
+				   	  	}else{
+				   	  		console.log(foundAuthorOne);
+				   	  	}
+				   	  }); 
+				   });	
+				}
+			});
+			res.redirect('/');    
+        }
+    });
 });
 
 function isLoggedIn(req, res, next){
