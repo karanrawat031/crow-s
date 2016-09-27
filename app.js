@@ -277,7 +277,14 @@ app.put('/:username/edit/:id',isLoggedIn,function(req,res){
 });
 
 app.get('/:username/:userid/:adid/apply',isLoggedIn,function(req,res){
-	res.render('apply',{adid:req.params.adid,username:req.params.username,userid:req.params.userid});
+  App.find({by:req.params.username},function(applied){
+  	console.log(applied);
+  	if(!applied){
+  		res.render('apply',{adid:req.params.adid,username:req.params.username,userid:req.params.userid});
+  	}//else{
+  		//console.log('You have already applied for this job');
+  	//}	
+  });	
 });
 
 app.get('/:username/myads/applied',isLoggedIn,function(req,res){
