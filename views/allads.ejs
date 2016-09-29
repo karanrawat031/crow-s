@@ -1,7 +1,66 @@
 <% include ./partials/header %> 
 <div class='ui huge header inverted'>All ADS</div>
 <div class='ui medium header inverted'>Total Number of adds Posted:<%=no%></div>
-<% foundAll.forEach(function(foundOne){ %> 
+<%if(currentUser){%>
+<% foundAll.forEach(function(foundOne){
+   for(i=0;i<applied.length;i++){
+   if(applied[i].by==currentUser.username && applied[i].author.username==foundOne.author.username){ %>
+   <div class='ui main text container segment'>
+    <div class="ui items">
+      <div class="item">
+        <div class="content">
+          <a class="header">Name:<%=foundOne.name%></a>
+          <div class="description">
+            <p><span style="font-size:19px;">Perks:</span><%=foundOne.perks%></p>
+            <p><span style="font-size:19px;">Category:</span><%=foundOne.cat%></p>
+            <p><span style="font-size:19px;">Location:</span><%=foundOne.location%></p>
+            <p><span style="font-size:19px;">Duration:</span><%=foundOne.time%></p>
+            <p><span style="font-size:19px;">Description:</span><%=foundOne.description%></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if(currentUser){ %>
+      <a class='ui orange basic button' type="submit">Applied</a>
+    <% }else{ %>
+      <a class='ui green basic button' type="submit" href='/login'>Apply</a>
+    <% } %>
+    <h4 class="ui horizontal header divider">
+        <a href="/user/<%=foundOne.author.username%>"><%=foundOne.author.username%></a>
+      </h4>
+  </div>  
+   <%break%>
+<% }else{ %>
+   <div class='ui main text container segment'>
+    <div class="ui items">
+      <div class="item">
+        <div class="content">
+          <a class="header">Name:<%=foundOne.name%></a>
+          <div class="description">
+            <p><span style="font-size:19px;">Perks:</span><%=foundOne.perks%></p>
+            <p><span style="font-size:19px;">Category:</span><%=foundOne.cat%></p>
+            <p><span style="font-size:19px;">Location:</span><%=foundOne.location%></p>
+            <p><span style="font-size:19px;">Duration:</span><%=foundOne.time%></p>
+            <p><span style="font-size:19px;">Description:</span><%=foundOne.description%></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if(currentUser){ %>
+      <a class='ui green basic button' type="submit" href='/<%=foundOne.author.username%>/<%=foundOne.author.id%>/<%=foundOne._id%>/apply'>Apply</a>
+    <% }else{ %>
+      <a class='ui green basic button' type="submit" href='/login'>Apply</a>
+    <% } %>
+    <h4 class="ui horizontal header divider">
+        <a href="/user/<%=foundOne.author.username%>"><%=foundOne.author.username%></a>
+      </h4>
+  </div>  
+   <%break%>
+<% } %>
+<% } %>
+<% });%> 
+<% }else{ %>
+    <% foundAll.forEach(function(foundOne){ %> 
  <div class='ui main text container segment'>
     <div class="ui items">
       <div class="item">
@@ -27,4 +86,5 @@
       </h4>
   </div>  
 <% }); %><br><hr>   
+<% } %>  
 <% include ./partials/footer %>

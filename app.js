@@ -167,8 +167,19 @@ app.get('/allAds',function(req,res){
 		if(err){
 			res.redirect('/');
 		}else{
-			res.render('allads',{foundAll:foundAll,no:foundAll.length});
+			if(!req.user){
+				res.render('allads',{foundAll:foundAll,no:foundAll.length});
+			}else{
+			App.find({by:req.user.username},function(err,applied){
+				if(err){
+					console.log(err);
+					res.redirect('back');
+				}else{
+					res.render('allads',{foundAll:foundAll,no:foundAll.length,applied:applied});
+				}
+			});
 		}
+	   }		
 	});
 });
 
