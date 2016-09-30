@@ -156,10 +156,30 @@ app.get('/:username/myads',isLoggedIn,function(req,res){
 		    var month = months[millistamp.getMonth()];
 		    var date = millistamp.getDate();
 		    var formattedTime = month + ' ' + date + ', ' + year;
-			res.render('myads',{foundAuthorAll:foundAuthorAll,no:foundAuthorAll.length,formattedTime:formattedTime});
+		    App.find({'author.username':req.user.username},function(err,no){
+		    	if(err){
+		    		console.log(err);
+		    		res.redirect('back');
+		    	}else{
+		    		var no = no.length;
+		    		res.render('myads',{foundAuthorAll:foundAuthorAll,no:foundAuthorAll.length,formattedTime:formattedTime,no:no});
+		    	}
+		    });
 		}
 	});
 });
+
+//show answered ads
+app.get('/:username/answered',isLoggedIn,function(req,res){
+	App.find({'author.username':req.user.username},function(err,no){
+			    	if(err){
+			    		console.log(err);
+			    		res.redirect('back');
+			    	}else{
+			    		res.render('myansads',{no:no});
+			    	}
+			    });
+	});
 
 //show all ads
 app.get('/allAds',function(req,res){

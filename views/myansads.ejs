@@ -1,0 +1,21 @@
+<% include ./partials/header %> 
+<div class='ui huge header inverted'><%=currentUser.username%> your answered ADS</div> 
+<% no.forEach(function(one){ %> 
+ <div class='ui main text container segment'>
+    <div class="ui items">
+      <div class="item">
+        <div class="content">
+          <p class="header">Name:<%=one.name%></p>
+          <p><span style="font-size:19px;">Ad</span><%=one.appli.id%></p>
+          <div class="description">
+            <p><span style="font-size:19px;">Email</span><%=one.email%></p>
+            <p><span style="font-size:19px;">Phone:</span><%=one.phone%></p>
+            <p><span style="font-size:19px;">Desc:</span><%=one.desc%></p>
+            <p><span style="font-size:19px;">By:</span><%=one.by%></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% }); %><br><hr>   
+<% include ./partials/footer %> 
